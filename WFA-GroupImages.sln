@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WFA-GroupImages", "WFA-GroupImages\WFA-GroupImages.csproj", "{5550C0FF-9201-48A5-B490-9AF37AF8008B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GILibrary", "GILibrary\GILibrary.csproj", "{65D52694-C476-4BEE-BE1F-C2C78F1A7435}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5550C0FF-9201-48A5-B490-9AF37AF8008B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5550C0FF-9201-48A5-B490-9AF37AF8008B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5550C0FF-9201-48A5-B490-9AF37AF8008B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5550C0FF-9201-48A5-B490-9AF37AF8008B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65D52694-C476-4BEE-BE1F-C2C78F1A7435}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65D52694-C476-4BEE-BE1F-C2C78F1A7435}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65D52694-C476-4BEE-BE1F-C2C78F1A7435}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65D52694-C476-4BEE-BE1F-C2C78F1A7435}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
