@@ -216,7 +216,14 @@ namespace GILibrary
         }
         public string NMCase(string[] list)
         {
-            index = list.Count() - 2;
+            if(list.Count() == 3)
+            {
+                index = list.Count() - 2;
+            }
+            else
+            {
+                index = list.Count() - 3;
+            }
             return list[index];
         }
         public string SexukaCase(string[] list)
