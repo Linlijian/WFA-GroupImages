@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using System.Text.RegularExpressions;
 
 namespace GILibrary
 {
@@ -19,6 +20,7 @@ namespace GILibrary
         }
         public class Image2PdfModel
         {
+            public string _key;
             public string _imagesPaths;
             public string _FolderPaths;
         }
@@ -46,6 +48,7 @@ namespace GILibrary
         public readonly IList<PathsModel> _Path;
         public string FilePath;
         public string listPaths;
+        public string _searchPatterns;
         #endregion
 
         #region Method
@@ -58,6 +61,7 @@ namespace GILibrary
             PageSize = iTextSharp.text.PageSize.A4;
             Margin = 15f;
             ErrorMassage = "";
+
         }
 
         //method
@@ -88,6 +92,92 @@ namespace GILibrary
 
                     doc.Open();
 
+                    foreach (var imagePath in pdfPath._image)
+                    {
+                        using (var imageStream = new FileStream(imagePath._imagesPaths, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                        {
+                            var image = Image.GetInstance(imageStream);
+
+                            #region Checks orientation
+
+                            doc.SetPageSize(image.Width > image.Height
+                                      ? PageSize.Rotate()
+                                      : PageSize);
+
+                            #endregion Checks orientation
+
+                            doc.NewPage();
+
+                            #region Configures image
+
+                            image.ScaleToFit(new Rectangle(0, 0, doc.PageSize.Width - (doc.RightMargin + doc.LeftMargin + 1), doc.PageSize.Height - (doc.BottomMargin + doc.TopMargin + 1)));
+                            image.Alignment = Image.ALIGN_CENTER;
+
+                            #endregion Configures image
+
+                            #region Creates elements
+
+                            var table = new PdfPTable(1)
+                            {
+                                WidthPercentage = 100
+                            };
+
+                            var cell = new PdfPCell
+                            {
+                                VerticalAlignment = Element.ALIGN_MIDDLE,
+                                MinimumHeight = doc.PageSize.Height - (doc.BottomMargin + doc.TopMargin),
+                                Border = 0,
+                                BorderWidth = 0,
+                                Padding = 0,
+                                Indent = 0
+                            };
+
+                            cell.AddElement(image);
+
+                            table.AddCell(cell);
+
+                            #endregion Creates elements
+
+                            doc.Add(table);
+                        }
+                    }
+
+                    doc.Close();
+                }
+                NextPaths: continue;
+            }
+
+        }
+        public void GenerateFolderPdf(IList<Image2PdfModel> model, bool custom = true)
+        {
+            string _path;
+            string exists;
+            var folder = model.GroupBy(item => item._FolderPaths)
+                                 .Select(group => new { _pdfPath = group.Key, _image = group.ToList() })
+                                 .ToList();
+
+            listPaths = "ListPaths \r\n";
+            IList<Image2PdfModel> order;
+
+            foreach (var pdfPath in folder)
+            {
+                var doc = new Document();
+                doc.SetMargins(Margin, Margin, Margin, Margin);
+                _path = FilePath + @"\" + pdfPath._pdfPath + ".pdf";
+
+                listPaths += "'" + pdfPath._pdfPath + "\r\n";
+                exists = pdfPath._pdfPath + ".pdf";
+
+                if ((from p in _Path where p._Paths.Equals(exists) select p).Any())
+                    goto NextPaths;
+
+                using (var stream = new FileStream(_path, FileMode.Create, FileAccess.Write, FileShare.None))
+                {
+                    PdfWriter.GetInstance(doc, stream);
+
+                    doc.Open();
+
+                    order = pdfPath._image.OrderBy(t => t._key).ToList();
                     foreach (var imagePath in pdfPath._image)
                     {
                         using (var imageStream = new FileStream(imagePath._imagesPaths, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
@@ -186,6 +276,35 @@ namespace GILibrary
                 ErrorMassage = e.Message;
             }
         }
+        public void AddDirectory(string directory, string searchPatterns, bool custom = true)
+        {
+            string sourceDirectory = directory;
+            string key;
+            try
+            {
+                var allFiles
+                  = Directory.EnumerateFiles(sourceDirectory, searchPatterns, SearchOption.AllDirectories);
+
+                foreach (string currentFile in allFiles)
+                {
+                    string fileName = currentFile.Substring(sourceDirectory.Length + 1);
+                    var item = fileName.Split('\\');
+                   // key = SearchCustomPages(item.First());
+
+                   //if (key == "-1")
+                   // {
+                   //     ErrorMassage = "Cant save but image name error!";
+                   //     return;
+                   // }
+
+                    I2PModel.Add(new Image2PdfModel {_FolderPaths = item[0], _imagesPaths = currentFile });
+                }
+            }
+            catch (Exception e)
+            {
+                ErrorMassage = e.Message;
+            }
+        }
         public void FindDirectory(string directory, string searchPatterns = "*.jpg")
         {
             try
@@ -216,15 +335,24 @@ namespace GILibrary
         }
         public string NMCase(string[] list)
         {
-            if(list.Count() == 3)
+           try
             {
-                index = list.Count() - 2;
+                if (list.Count() == 3)
+                {
+                    index = list.Count() - 2;
+                }
+                else
+                {
+                    index = list.Count() - 3;
+                }
+                return list[index];
             }
-            else
+            catch
             {
-                index = list.Count() - 3;
+                //termsList = list.First().Split(new[] { "." }, StringSplitOptions.None);
+                //return termsList.First();
+                return "GroupImages";
             }
-            return list[index];
         }
         public string SexukaCase(string[] list)
         {
@@ -242,6 +370,27 @@ namespace GILibrary
                 }
             }
             return NMCase(list);
+        }
+        public string SearchCustomPages(string image)
+        {
+            string pattern = @"\d+";
+            Regex rg = new Regex(pattern);
+            MatchCollection matchedAuthors = rg.Matches(image);
+
+            if (matchedAuthors.Count > 1 || matchedAuthors.Count == 0 )
+            {
+                return "-1";
+            }
+            else
+            {
+                return matchedAuthors[0].Value;
+            }
+        }
+        public void SearchPatterns(string Patterns)
+        {
+            termsList = Patterns.Split(new[] { "." }, StringSplitOptions.None);
+            _searchPatterns = "*." + termsList.Last();
+
         }
         public void Move(string directoryFrom, string directoryTo)
         {

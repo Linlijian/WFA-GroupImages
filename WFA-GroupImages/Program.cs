@@ -17,6 +17,9 @@ namespace WFA_GroupImages
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new GIFrom());
+
+            //test
+            //Application.Run(new Form1());
         }
     }
 }

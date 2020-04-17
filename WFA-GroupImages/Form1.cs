@@ -175,8 +175,9 @@ namespace WFA_GroupImages
             }
 
             var gi = new GroupImageLib();
-            gi.FindDirectory(sourceDirectory);
-            gi.Move(sourceDirectory, sourceDirectoryto);
+
+            //gi.FindDirectory(sourceDirectory);
+            //gi.Move(sourceDirectory, sourceDirectoryto);
         }
 
         

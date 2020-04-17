@@ -35,6 +35,8 @@
             this.txtTo = new System.Windows.Forms.TextBox();
             this.btnGeneratePDF = new System.Windows.Forms.Button();
             this.btnCustom = new System.Windows.Forms.Button();
+            this.txtCustom = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -51,7 +53,7 @@
             // 
             this.btnGroupFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGroupFolder.Font = new System.Drawing.Font("Itim", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGroupFolder.Location = new System.Drawing.Point(145, 128);
+            this.btnGroupFolder.Location = new System.Drawing.Point(145, 177);
             this.btnGroupFolder.Name = "btnGroupFolder";
             this.btnGroupFolder.Size = new System.Drawing.Size(218, 58);
             this.btnGroupFolder.TabIndex = 1;
@@ -87,7 +89,7 @@
             // 
             this.btnGeneratePDF.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGeneratePDF.Font = new System.Drawing.Font("Itim", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGeneratePDF.Location = new System.Drawing.Point(369, 128);
+            this.btnGeneratePDF.Location = new System.Drawing.Point(369, 177);
             this.btnGeneratePDF.Name = "btnGeneratePDF";
             this.btnGeneratePDF.Size = new System.Drawing.Size(218, 58);
             this.btnGeneratePDF.TabIndex = 4;
@@ -97,21 +99,41 @@
             // 
             // btnCustom
             // 
-            this.btnCustom.Enabled = false;
             this.btnCustom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCustom.Font = new System.Drawing.Font("Itim", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCustom.Location = new System.Drawing.Point(593, 128);
+            this.btnCustom.Location = new System.Drawing.Point(593, 177);
             this.btnCustom.Name = "btnCustom";
             this.btnCustom.Size = new System.Drawing.Size(218, 58);
             this.btnCustom.TabIndex = 5;
             this.btnCustom.Text = "Custom";
             this.btnCustom.UseVisualStyleBackColor = true;
+            this.btnCustom.Click += new System.EventHandler(this.btnCustom_Click);
+            // 
+            // txtCustom
+            // 
+            this.txtCustom.Location = new System.Drawing.Point(145, 124);
+            this.txtCustom.Name = "txtCustom";
+            this.txtCustom.ReadOnly = true;
+            this.txtCustom.Size = new System.Drawing.Size(666, 22);
+            this.txtCustom.TabIndex = 7;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Itim", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(31, 114);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(108, 34);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Custom";
             // 
             // GIFrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(885, 227);
+            this.ClientSize = new System.Drawing.Size(885, 263);
+            this.Controls.Add(this.txtCustom);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.btnCustom);
             this.Controls.Add(this.btnGeneratePDF);
             this.Controls.Add(this.txtTo);
@@ -122,6 +144,7 @@
             this.MaximizeBox = false;
             this.Name = "GIFrom";
             this.Text = "GIFrom";
+            this.Load += new System.EventHandler(this.GIFrom_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -136,5 +159,7 @@
         private System.Windows.Forms.TextBox txtTo;
         private System.Windows.Forms.Button btnGeneratePDF;
         private System.Windows.Forms.Button btnCustom;
+        private System.Windows.Forms.TextBox txtCustom;
+        private System.Windows.Forms.Label label3;
     }
 }
