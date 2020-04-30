@@ -26,26 +26,39 @@ namespace GILibrary
         {
             public string _Paths;
         }
+        public class GroupImageLibModel
+        {
+            public string _dir;
+            public string _to;
+            public string _from;
+            public string[] termsList;
+            public string Folder;
+            public string[] arrFolder;
+            public int index;
+            public string FilePath;
+            public string listPaths;
+        }
         #endregion
 
         #region Prop
         public List<GIModel> _GIModel;
+        public GroupImageLibModel GILModel;
         public string ErrorMassage { get; set; }
         private readonly string[] _SexukaCase = { "[LR][SEXUKA.COM]", "[SEXUKA.COM]", "Sexuka.com", "[BT][SEXUKA.COM]" };
         private readonly int _case = 2;
-        private string _dir;
-        private string _to;
-        private string _from;
-        private string[] termsList;
-        private string Folder;
-        private string[] arrFolder;
-        private int index;
+        //private string _dir;
+        //private string _to;
+        //private string _from;
+        //private string[] termsList;
+        //private string Folder;
+        //private string[] arrFolder;
+        //private int index;
         public Rectangle PageSize { get; set; }
         public float Margin { get; set; }
         public readonly IList<Image2PdfModel> I2PModel;
         public readonly IList<PathsModel> _Path;
-        public string FilePath;
-        public string listPaths;
+        //public string FilePath;
+        //public string listPaths;
         #endregion
 
         #region Method
@@ -53,6 +66,7 @@ namespace GILibrary
         public GroupImageLib()
         {
             _GIModel = new List<GIModel>();
+            GILModel = new GroupImageLibModel();
             I2PModel = new List<Image2PdfModel>();
             _Path = new List<PathsModel>();
             PageSize = iTextSharp.text.PageSize.A4;
@@ -69,14 +83,14 @@ namespace GILibrary
                                  .Select(group => new { _pdfPath = group.Key, _image = group.ToList() })
                                  .ToList();
 
-            listPaths = "ListPaths \r\n";
+            GILModel.listPaths = "ListPaths \r\n";
             foreach (var pdfPath in folder)
             {
                 var doc = new Document();
                 doc.SetMargins(Margin, Margin, Margin, Margin);
-                _path = FilePath + @"\" + pdfPath._pdfPath + ".pdf";
+                _path = GILModel.FilePath + @"\" + pdfPath._pdfPath + ".pdf";
 
-                listPaths += "'" + pdfPath._pdfPath + "\r\n";
+                GILModel.listPaths += "'" + pdfPath._pdfPath + "\r\n";
                 exists = pdfPath._pdfPath + ".pdf";
 
                 if ((from p in _Path where p._Paths.Equals(exists) select p).Any())
@@ -197,10 +211,10 @@ namespace GILibrary
                     string fileName = currentFile.Substring(directory.Length + 1);
 
                     //process file
-                    termsList = fileName.Split(new[] { "__" }, StringSplitOptions.None);
+                    GILModel.termsList = fileName.Split(new[] { "__" }, StringSplitOptions.None);
 
-                    Folder = termsList.Count() == _case ? DoujinTHCase(termsList) : SexukaCase(termsList);
-                    _GIModel.Add(new GIModel { fullName = fileName, foldername = Folder });
+                    GILModel.Folder = GILModel.termsList.Count() == _case ? DoujinTHCase(GILModel.termsList) : SexukaCase(GILModel.termsList);
+                    _GIModel.Add(new GIModel { fullName = fileName, foldername = GILModel.Folder });
                 }
             }
             catch (Exception ex)
@@ -210,35 +224,35 @@ namespace GILibrary
         }
         public string DoujinTHCase(string[] list)
         {
-            index = list.Count() - 1;
-            arrFolder = list[index].Split(new[] { "_" }, StringSplitOptions.None);
-            return arrFolder[0];
+            GILModel.index = list.Count() - 1;
+            GILModel.arrFolder = list[GILModel.index].Split(new[] { "_" }, StringSplitOptions.None);
+            return GILModel.arrFolder[0];
         }
         public string NMCase(string[] list)
         {
             if(list.Count() == 3)
             {
-                index = list.Count() - 2;
+                GILModel.index = list.Count() - 2;
             }
             else
             {
-                index = list.Count() - 3;
+                GILModel.index = list.Count() - 3;
             }
-            return list[index];
+            return list[GILModel.index];
         }
         public string SexukaCase(string[] list)
         {
-            index = list.Count() - 2;
+            GILModel.index = list.Count() - 2;
 
             foreach (var file in _SexukaCase)
             {
-                arrFolder = (from _folder in list
+                GILModel.arrFolder = (from _folder in list
                              where _folder.Contains(file)
                              select _folder).ToArray();
-                if (arrFolder.Count() > 0)
+                if (GILModel.arrFolder.Count() > 0)
                 {
-                    arrFolder = list[index].Split(new[] { arrFolder.First() }, StringSplitOptions.None);
-                    return DoujinTHCase(arrFolder);
+                    GILModel.arrFolder = list[GILModel.index].Split(new[] { GILModel.arrFolder.First() }, StringSplitOptions.None);
+                    return DoujinTHCase(GILModel.arrFolder);
                 }
             }
             return NMCase(list);
@@ -249,18 +263,18 @@ namespace GILibrary
             {
                 foreach (var item in _GIModel)
                 {
-                    _dir = directoryTo + "\\" + item.foldername;
-                    _to = _dir + "\\" + item.fullName;
-                    _from = directoryFrom + "\\" + item.fullName;
+                    GILModel._dir = directoryTo + "\\" + item.foldername;
+                    GILModel._to = GILModel._dir + "\\" + item.fullName;
+                    GILModel._from = directoryFrom + "\\" + item.fullName;
 
-                    if (!Directory.Exists(_dir))
+                    if (!Directory.Exists(GILModel._dir))
                     {
-                        Directory.CreateDirectory(_dir);
-                        File.Move(_from, _to);
+                        Directory.CreateDirectory(GILModel._dir);
+                        File.Move(GILModel._from, GILModel._to);
                     }
                     else
                     {
-                        File.Move(_from, _to);
+                        File.Move(GILModel._from, GILModel._to);
                     }
                 }
             }

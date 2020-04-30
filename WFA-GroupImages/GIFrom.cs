@@ -58,12 +58,12 @@ namespace WFA_GroupImages
             {
                 GroupImages.Margin = 0;
                 GroupImages.AddDirectory(txtFrom.Text);
-                GroupImages.FilePath = txtTo.Text;
+                GroupImages.GILModel.FilePath = txtTo.Text;
 
                 GroupImages.CheckPaths(txtTo.Text);
                 GroupImages.GenerateFolderPdf(GroupImages.I2PModel);
 
-                listPages _lp = new listPages(GroupImages.listPaths);
+                listPages _lp = new listPages(GroupImages.GILModel.listPaths);
                 _lp.Show();
 
                 string msg = GroupImages.ErrorMassage == "" ? "PDF file successfully generated!" : GroupImages.ErrorMassage;
