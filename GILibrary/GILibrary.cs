@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using System.Text.RegularExpressions;
 
 namespace GILibrary
 {
@@ -213,7 +214,7 @@ namespace GILibrary
                     //process file
                     GILModel.termsList = fileName.Split(new[] { "__" }, StringSplitOptions.None);
 
-                    GILModel.Folder = GILModel.termsList.Count() == _case ? DoujinTHCase(GILModel.termsList) : SexukaCase(GILModel.termsList);
+                    GILModel.Folder = GILModel.termsList.Count() == _case ? NumberCase(GILModel.termsList) : SexukaCase(GILModel.termsList);
                     _GIModel.Add(new GIModel { fullName = fileName, foldername = GILModel.Folder });
                 }
             }
@@ -222,13 +223,26 @@ namespace GILibrary
                 ErrorMassage = ex.Message;
             }
         }
-        public string DoujinTHCase(string[] list)
+        private string DoujinTHCase(string[] list)
         {
             GILModel.index = list.Count() - 1;
             GILModel.arrFolder = list[GILModel.index].Split(new[] { "_" }, StringSplitOptions.None);
             return GILModel.arrFolder[0];
         }
-        public string NMCase(string[] list)
+        private string NumberCase(string[] list)
+        {
+            Regex regex = new Regex(@"^[0-9]*$");
+
+            foreach(var item in list)
+            {
+                if (regex.IsMatch(item))
+                {
+                    return item;
+                }
+            }
+            return DoujinTHCase(list);
+        }
+        private string NMCase(string[] list)
         {
             if(list.Count() == 3)
             {
@@ -240,7 +254,7 @@ namespace GILibrary
             }
             return list[GILModel.index];
         }
-        public string SexukaCase(string[] list)
+        private string SexukaCase(string[] list)
         {
             GILModel.index = list.Count() - 2;
 
