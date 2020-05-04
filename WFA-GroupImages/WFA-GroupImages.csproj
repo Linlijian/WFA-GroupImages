@@ -120,6 +120,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Release\GI.zip" />
+    <None Include="Release\WFA-GI.zip" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
