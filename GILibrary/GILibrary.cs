@@ -78,15 +78,20 @@ namespace GILibrary
         //method
         public void GenerateFolderPdf(IList<Image2PdfModel> model)
         {
+            #region init
             string _path;
             string exists;
+            var comparer = new StringNumberComparer();
             var folder = model.GroupBy(item => item._FolderPaths)
                                  .Select(group => new { _pdfPath = group.Key, _image = group.ToList() })
                                  .ToList();
 
             GILModel.listPaths = "ListPaths \r\n";
+            #endregion
+
             foreach (var pdfPath in folder)
             {
+                #region pdf exist
                 var doc = new Document();
                 doc.SetMargins(Margin, Margin, Margin, Margin);
                 _path = GILModel.FilePath + @"\" + pdfPath._pdfPath + ".pdf";
@@ -96,6 +101,7 @@ namespace GILibrary
 
                 if ((from p in _Path where p._Paths.Equals(exists) select p).Any())
                     goto NextPaths;
+                #endregion              
 
                 using (var stream = new FileStream(_path, FileMode.Create, FileAccess.Write, FileShare.None))
                 {
@@ -242,6 +248,19 @@ namespace GILibrary
             }
             return DoujinTHCase(list);
         }
+        private string OtherCase(string[] list)
+        {
+            Regex regex = new Regex(@"[_]");
+            if (regex.IsMatch(list[0]))
+            {
+                return DoujinTHCase(list);
+            }
+            else
+            {
+                list[0] = "GroupImage_";
+                return DoujinTHCase(list);
+            }
+        }
         private string NMCase(string[] list)
         {
             if(list.Count() == 3)
@@ -258,6 +277,11 @@ namespace GILibrary
         {
             GILModel.index = list.Count() - 2;
 
+            if (GILModel.index < 0)
+            {
+                return OtherCase(list);
+            }
+
             foreach (var file in _SexukaCase)
             {
                 GILModel.arrFolder = (from _folder in list
@@ -269,6 +293,7 @@ namespace GILibrary
                     return DoujinTHCase(GILModel.arrFolder);
                 }
             }
+
             return NMCase(list);
         }
         public void Move(string directoryFrom, string directoryTo)
