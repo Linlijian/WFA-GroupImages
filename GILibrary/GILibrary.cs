@@ -76,12 +76,99 @@ namespace GILibrary
         }
 
         //method
+        public void GenerateFolderPdf(IList<Image2PdfModel> model, bool sort = true)
+        {
+            #region init
+            string _path;
+            string exists;
+            var folder = model.GroupBy(item => item._FolderPaths)
+                                 .Select(group => new { _pdfPath = group.Key, _image = group.ToList() })
+                                 .ToList();
+
+            GILModel.listPaths = "ListPaths \r\n";
+            #endregion
+
+            foreach (var pdfPath in folder)
+            {
+                #region pdf exist
+                var doc = new Document();
+                doc.SetMargins(Margin, Margin, Margin, Margin);
+                _path = GILModel.FilePath + @"\" + pdfPath._pdfPath + ".pdf";
+
+                GILModel.listPaths += "'" + pdfPath._pdfPath + "\r\n";
+                exists = pdfPath._pdfPath + ".pdf";
+
+                if ((from p in _Path where p._Paths.Equals(exists) select p).Any())
+                    goto NextPaths;
+                #endregion              
+
+                using (var stream = new FileStream(_path, FileMode.Create, FileAccess.Write, FileShare.None))
+                {
+                    PdfWriter.GetInstance(doc, stream);
+
+                    doc.Open();
+
+                    foreach (var imagePath in pdfPath._image)
+                    {
+                        using (var imageStream = new FileStream(imagePath._imagesPaths, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                        {
+                            var image = Image.GetInstance(imageStream);
+
+                            #region Checks orientation
+
+                            doc.SetPageSize(image.Width > image.Height
+                                      ? PageSize.Rotate()
+                                      : PageSize);
+
+                            #endregion Checks orientation
+
+                            doc.NewPage();
+
+                            #region Configures image
+
+                            image.ScaleToFit(new Rectangle(0, 0, doc.PageSize.Width - (doc.RightMargin + doc.LeftMargin + 1), doc.PageSize.Height - (doc.BottomMargin + doc.TopMargin + 1)));
+                            image.Alignment = Image.ALIGN_CENTER;
+
+                            #endregion Configures image
+
+                            #region Creates elements
+
+                            var table = new PdfPTable(1)
+                            {
+                                WidthPercentage = 100
+                            };
+
+                            var cell = new PdfPCell
+                            {
+                                VerticalAlignment = Element.ALIGN_MIDDLE,
+                                MinimumHeight = doc.PageSize.Height - (doc.BottomMargin + doc.TopMargin),
+                                Border = 0,
+                                BorderWidth = 0,
+                                Padding = 0,
+                                Indent = 0
+                            };
+
+                            cell.AddElement(image);
+
+                            table.AddCell(cell);
+
+                            #endregion Creates elements
+
+                            doc.Add(table);
+                        }
+                    }
+
+                    doc.Close();
+                }
+                NextPaths: continue;
+            }
+
+        }
         public void GenerateFolderPdf(IList<Image2PdfModel> model)
         {
             #region init
             string _path;
             string exists;
-            var comparer = new StringNumberComparer();
             var folder = model.GroupBy(item => item._FolderPaths)
                                  .Select(group => new { _pdfPath = group.Key, _image = group.ToList() })
                                  .ToList();
@@ -204,7 +291,7 @@ namespace GILibrary
             }
             catch (Exception e)
             {
-                ErrorMassage = e.Message;
+                ErrorMassage = "Cann't Generate Folder Pdf. Please Re-Check File Name.";
             }
         }
         public void FindDirectory(string directory, string searchPatterns = "*.jpg")
@@ -226,7 +313,7 @@ namespace GILibrary
             }
             catch (Exception ex)
             {
-                ErrorMassage = ex.Message;
+                ErrorMassage = "Cann't Move. Please Re-Check File Name.";
             }
         }
         private string DoujinTHCase(string[] list)
@@ -319,7 +406,7 @@ namespace GILibrary
             }
             catch (Exception ex)
             {
-                ErrorMassage = ex.Message;
+                ErrorMassage = "Cann't Move. Please Re-Check File Name.";
             }
         }
         #endregion

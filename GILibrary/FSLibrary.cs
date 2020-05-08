@@ -37,18 +37,20 @@ namespace GILibrary
                     writer.WriteStartElement("FormState");
                     writer.WriteElementString("isDisableMsg", "False");
                     writer.WriteElementString("isSelectSingle", "False");
+                    writer.WriteElementString("isSorting", "False");
                     writer.WriteEndElement();
                     writer.Flush();
                 }
             }
         }
 
-        public void writeConfig(bool chkSelect, bool chkDisable)
+        public void writeConfig(bool chkSelect, bool chkDisable, bool chkSort)
         {
             using (StreamWriter sw = new StreamWriter("config.xml"))
             {
                 state.isDisableMsg = chkDisable;
                 state.isSelectSingle = chkSelect;
+                state.isSorting = chkSort;
                 XmlSerializer ser = new XmlSerializer(typeof(FormState));
                 ser.Serialize(sw, state);
             }

@@ -179,7 +179,19 @@ namespace WFA_GroupImages
             gi.Move(sourceDirectory, sourceDirectoryto);
         }
 
-        
+        private void button2_Click(object sender, EventArgs e)
+        {
+            string sourceDirectory = @"D:\testGI";
+            string sourceDirectoryto = @"D:\testGI";
+            var GroupImages = new GroupImageLib();
+            GroupImages.Margin = 0;
+            GroupImages.AddDirectory(sourceDirectory);
+            GroupImages.GILModel.FilePath = sourceDirectoryto;
+
+            GroupImages.CheckPaths(sourceDirectoryto);
+            var I2PModel = GroupImages.I2PModel.SortGI();
+            GroupImages.GenerateFolderPdf(I2PModel);
+        }
     }
 
     public class Model

@@ -21,7 +21,7 @@ namespace WFA_GroupImages
         private void btnSaveCastom_Click(object sender, EventArgs e)
         {
             FSLibrary state = new FSLibrary();
-            state.writeConfig(chkSelect.Checked, chkDisable.Checked);
+            state.writeConfig(chkSelect.Checked, chkDisable.Checked, chkSort.Checked);
 
             this.Close();
         }
@@ -35,6 +35,7 @@ namespace WFA_GroupImages
             {
                 chkDisable.Checked = state.state.isDisableMsg;
                 chkSelect.Checked = state.state.isSelectSingle;
+                chkSort.Checked = state.state.isSorting;
             }
 
             this.Focus();

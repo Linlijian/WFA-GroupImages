@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using GILibrary;
+using static GILibrary.GroupImageLib;
 
 namespace WFA_GroupImages
 {
@@ -103,7 +104,17 @@ namespace WFA_GroupImages
                 GroupImages.GILModel.FilePath = txtTo.Text;
 
                 GroupImages.CheckPaths(txtTo.Text);
-                GroupImages.GenerateFolderPdf(GroupImages.I2PModel);
+
+                if (state.state.isSorting)
+                {
+                    var I2PModel = GroupImages.I2PModel.SortGI();
+                    GroupImages.GenerateFolderPdf(I2PModel, true);
+                }
+                else
+                {
+                    GroupImages.GenerateFolderPdf(GroupImages.I2PModel);
+                }
+                
 
                 listPages _lp = new listPages(GroupImages.GILModel.listPaths);
                 _lp.Show();
