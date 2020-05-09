@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GILibrary
@@ -111,6 +113,49 @@ namespace GILibrary
                 //ex.Log();
                 return null;
             }
+        }
+        public static DateTime AsDateTime(this object data, DateTime? defaultValue = null)
+        {
+            if (IsNullOrEmpty(data))
+                return defaultValue != null ? Convert.ToDateTime(defaultValue) : DateTime.MinValue;
+
+            var dutchCultureInfo = CultureInfo.CreateSpecificCulture("en-US");
+            dutchCultureInfo.DateTimeFormat.ShortDatePattern = "d/M/yyyy";
+            dutchCultureInfo.DateTimeFormat.DateSeparator = "/";
+
+            var culture = Thread.CurrentThread.CurrentCulture;
+            Thread.CurrentThread.CurrentCulture = dutchCultureInfo;
+            DateTime dtTime = Convert.ToDateTime(data);
+
+            var date = string.Format("{0:dd/MM/yyyy}", dtTime);
+
+            DateTime newDate = DateTime.ParseExact(date, "dd/MM/yyyy", dutchCultureInfo, DateTimeStyles.None);
+
+            Thread.CurrentThread.CurrentCulture = culture;
+            return newDate;
+
+        }
+        public static DateTime? AsDateTimeNull(this object data)
+        {
+            //return IsNullOrEmpty(data) ? (DateTime?)null : Convert.ToDateTime(data);
+
+            if (IsNullOrEmpty(data))
+                return null;
+
+            var dutchCultureInfo = CultureInfo.CreateSpecificCulture("en-US");
+            dutchCultureInfo.DateTimeFormat.ShortDatePattern = "d/M/yyyy";
+            dutchCultureInfo.DateTimeFormat.DateSeparator = "/";
+
+            var culture = Thread.CurrentThread.CurrentCulture;
+            Thread.CurrentThread.CurrentCulture = dutchCultureInfo;
+            DateTime dtTime = Convert.ToDateTime(data);
+
+            var date = string.Format("{0:dd/MM/yyyy}", dtTime);
+
+            DateTime newDate = DateTime.ParseExact(date, "dd/MM/yyyy", dutchCultureInfo, DateTimeStyles.None);
+
+            Thread.CurrentThread.CurrentCulture = culture;
+            return newDate;
         }
     }
 }

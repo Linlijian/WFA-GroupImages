@@ -50,6 +50,7 @@
     <Compile Include="FSLibrary.cs" />
     <Compile Include="GILibrary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResultPathModel.cs" />
     <Compile Include="Sorting.cs" />
   </ItemGroup>
   <ItemGroup>

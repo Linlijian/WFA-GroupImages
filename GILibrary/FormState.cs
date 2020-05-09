@@ -11,5 +11,6 @@ namespace GILibrary
         public bool isSelectSingle { get; set; }
         public bool isDisableMsg { get; set; }
         public bool isSorting { get; set; }
+        public bool isMulti { get; set; }
     }
 }

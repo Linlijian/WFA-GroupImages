@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GILibrary;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,10 +13,11 @@ namespace WFA_GroupImages
 {
     public partial class listPages : Form
     {
-        public listPages(string _listPages)
+        public listPages(List<ResultPathModel> _listPages)
         {
             InitializeComponent();
-            textBox1.Text = _listPages;
+            // textBox1.Text = _listPages;
+            this.resultGrid.DataSource = _listPages;
         }
     }
 }

@@ -39,6 +39,7 @@
             this.btnCustom = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.lblResult = new System.Windows.Forms.Label();
+            this.btnMulti = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -57,7 +58,7 @@
             this.btnGroupFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGroupFolder.Font = new System.Drawing.Font("Itim", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGroupFolder.Location = new System.Drawing.Point(109, 104);
-            this.btnGroupFolder.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnGroupFolder.Margin = new System.Windows.Forms.Padding(2);
             this.btnGroupFolder.Name = "btnGroupFolder";
             this.btnGroupFolder.Size = new System.Drawing.Size(164, 47);
             this.btnGroupFolder.TabIndex = 1;
@@ -68,7 +69,7 @@
             // txtFrom
             // 
             this.txtFrom.Location = new System.Drawing.Point(109, 37);
-            this.txtFrom.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtFrom.Margin = new System.Windows.Forms.Padding(2);
             this.txtFrom.Name = "txtFrom";
             this.txtFrom.Size = new System.Drawing.Size(500, 20);
             this.txtFrom.TabIndex = 2;
@@ -87,7 +88,7 @@
             // txtTo
             // 
             this.txtTo.Location = new System.Drawing.Point(109, 71);
-            this.txtTo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtTo.Margin = new System.Windows.Forms.Padding(2);
             this.txtTo.Name = "txtTo";
             this.txtTo.Size = new System.Drawing.Size(500, 20);
             this.txtTo.TabIndex = 3;
@@ -97,7 +98,7 @@
             this.btnGeneratePDF.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGeneratePDF.Font = new System.Drawing.Font("Itim", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGeneratePDF.Location = new System.Drawing.Point(277, 104);
-            this.btnGeneratePDF.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnGeneratePDF.Margin = new System.Windows.Forms.Padding(2);
             this.btnGeneratePDF.Name = "btnGeneratePDF";
             this.btnGeneratePDF.Size = new System.Drawing.Size(164, 47);
             this.btnGeneratePDF.TabIndex = 4;
@@ -110,7 +111,7 @@
             this.btnCustom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCustom.Font = new System.Drawing.Font("Itim", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCustom.Location = new System.Drawing.Point(445, 104);
-            this.btnCustom.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCustom.Margin = new System.Windows.Forms.Padding(2);
             this.btnCustom.Name = "btnCustom";
             this.btnCustom.Size = new System.Drawing.Size(164, 47);
             this.btnCustom.TabIndex = 5;
@@ -130,11 +131,25 @@
             this.lblResult.Size = new System.Drawing.Size(0, 19);
             this.lblResult.TabIndex = 6;
             // 
+            // btnMulti
+            // 
+            this.btnMulti.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMulti.Font = new System.Drawing.Font("Itim", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnMulti.Location = new System.Drawing.Point(108, 104);
+            this.btnMulti.Margin = new System.Windows.Forms.Padding(2);
+            this.btnMulti.Name = "btnMulti";
+            this.btnMulti.Size = new System.Drawing.Size(332, 47);
+            this.btnMulti.TabIndex = 7;
+            this.btnMulti.Text = "Multi Genrate in 1st Click";
+            this.btnMulti.UseVisualStyleBackColor = true;
+            this.btnMulti.Click += new System.EventHandler(this.btnMulti_Click);
+            // 
             // GIFrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(664, 217);
+            this.Controls.Add(this.btnMulti);
             this.Controls.Add(this.lblResult);
             this.Controls.Add(this.btnCustom);
             this.Controls.Add(this.btnGeneratePDF);
@@ -145,7 +160,7 @@
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.Name = "GIFrom";
             this.Text = "GIFrom";
@@ -166,5 +181,6 @@
         private System.Windows.Forms.Button btnCustom;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label lblResult;
+        private System.Windows.Forms.Button btnMulti;
     }
 }
