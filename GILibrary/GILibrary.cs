@@ -98,7 +98,7 @@ namespace GILibrary
                     doc.SetMargins(Margin, Margin, Margin, Margin);
                     _path = GILModel.FilePath + @"\" + lootFolder._imagesPaths + "\\" + pdfPath._pdfPath + ".pdf";
 
-                    SaveResultSinglePath(pdfPath._pdfPath);
+                    SaveResultSinglePath(pdfPath._pdfPath, pdfPath._image.Last().lootFoldername);
                     exists = pdfPath._pdfPath + ".pdf";
 
                     if ((from p in _Path where p._Paths.Equals(exists) select p).Any())
@@ -171,22 +171,34 @@ namespace GILibrary
         {
             return GILModel.FilePath + "\\" + _path.lootFoldername + "\\" + _path.subFoldername + "\\" + _path.fullName;
         }
-        private void SaveResultSinglePath(string _path)
+        private void SaveResultSinglePath(string _path, string sub = "")
         {
             try
             {
-                ResultPaths.Add(new ResultPathModel
+                if (sub != "")
                 {
-                    ImageCode = GILModel.FilePath.Split('\\').Last(),
-                    ImageName = _path
-                });
+                    ResultPaths.Add(new ResultPathModel
+                    {
+                        ImageCode = sub,
+                        ImageName = "'"+_path
+                    });
+                }
+                else
+                {
+                    ResultPaths.Add(new ResultPathModel
+                    {
+                        ImageCode = GILModel.FilePath.Split('\\').Last(),
+                        ImageName = "'" + _path
+                    });
+                }
+              
             }
             catch
             {
                 ResultPaths.Add(new ResultPathModel
                 {
-                    ImageName = _path,
-                    ImageCode = _path
+                    ImageName = "'" + _path,
+                    ImageCode = "'" + _path
                 });
             }
         }
@@ -296,7 +308,7 @@ namespace GILibrary
                 doc.SetMargins(Margin, Margin, Margin, Margin);
                 _path = GILModel.FilePath + @"\" + pdfPath._pdfPath + ".pdf";
 
-                GILModel.listPaths += "'" + pdfPath._pdfPath + "\r\n";
+                SaveResultSinglePath(pdfPath._pdfPath);
                 exists = pdfPath._pdfPath + ".pdf";
 
                 if ((from p in _Path where p._Paths.Equals(exists) select p).Any())

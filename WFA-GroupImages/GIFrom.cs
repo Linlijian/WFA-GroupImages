@@ -231,6 +231,8 @@ namespace WFA_GroupImages
             }
             catch (Exception ex)
             {
+                listPages result = new listPages(GroupImages.ResultPaths);
+                result.Show();
                 if (state.state.isDisableMsg)
                 {
                     lblResult.Text = ex.Message;
