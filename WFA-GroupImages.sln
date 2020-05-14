@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WFA-GroupImages", "WFA-Grou
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GILibrary", "GILibrary\GILibrary.csproj", "{65D52694-C476-4BEE-BE1F-C2C78F1A7435}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PILibrary", "PILibrary\PILibrary.csproj", "{CBD7CC41-D604-44DE-8946-AD302BCE1AEC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{65D52694-C476-4BEE-BE1F-C2C78F1A7435}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65D52694-C476-4BEE-BE1F-C2C78F1A7435}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{65D52694-C476-4BEE-BE1F-C2C78F1A7435}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBD7CC41-D604-44DE-8946-AD302BCE1AEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBD7CC41-D604-44DE-8946-AD302BCE1AEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBD7CC41-D604-44DE-8946-AD302BCE1AEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBD7CC41-D604-44DE-8946-AD302BCE1AEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

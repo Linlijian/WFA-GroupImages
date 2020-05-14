@@ -131,6 +131,10 @@
       <Project>{65D52694-C476-4BEE-BE1F-C2C78F1A7435}</Project>
       <Name>GILibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PILibrary\PILibrary.csproj">
+      <Project>{CBD7CC41-D604-44DE-8946-AD302BCE1AEC}</Project>
+      <Name>PILibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="login_w_wuI_icon.ico" />

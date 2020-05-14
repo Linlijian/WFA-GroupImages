@@ -214,7 +214,15 @@ namespace WFA_GroupImages
                 GroupImages.GILModel.FilePath = txtTo.Text;
                 GroupImages.FindSubDirectory(txtFrom.Text);
                 GroupImages.MoveSub(txtFrom.Text, txtTo.Text);
-                GroupImages.GenerateSubFolderPdf(GroupImages.I2PModel);
+               
+                if (state.state.isSorting)
+                {
+                    GroupImages.GenerateSubFolderPdf(GroupImages.I2PModel, sort: true);
+                }
+                else
+                {
+                    GroupImages.GenerateSubFolderPdf(GroupImages.I2PModel);
+                }
 
                 listPages result = new listPages(GroupImages.ResultPaths);
                 result.Show();

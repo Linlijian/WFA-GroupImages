@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GILibrary;
+using PILibrary;
 
 namespace WFA_GroupImages
 {
@@ -181,29 +182,8 @@ namespace WFA_GroupImages
 
         private void button2_Click(object sender, EventArgs e)
         {
-            string sourceDirectory = @"D:\testGI\A";
-            string sourceDirectoryto = @"D:\testGI\A";
-            var GroupImages = new GroupImageLib();
-
-
-            GroupImages.Margin = 0;
-            GroupImages.AddLootDirectory(sourceDirectory);
-            GroupImages.GILModel.FilePath = sourceDirectoryto;
-            GroupImages.FindSubDirectory(sourceDirectory);
-            GroupImages.MoveSub(sourceDirectory, sourceDirectoryto);
-            GroupImages.GenerateSubFolderPdf(GroupImages.I2PModel);
-
-            //GroupImages.FindDirectory(sourceDirectory+"\\A1");
-            //GroupImages.Move(sourceDirectory + "\\A1", sourceDirectory + "\\A1");
-
-
-
-
-
-
-            //GroupImages.CheckPaths(sourceDirectoryto);
-            //var I2PModel = GroupImages.I2PModel.SortGI();
-            //GroupImages.GenerateSubFolderPdf(GroupImages.I2PModel);
+            var pi = new PDF2Image();
+            pi.LoadImage("Atest",1);
         }
     }
 

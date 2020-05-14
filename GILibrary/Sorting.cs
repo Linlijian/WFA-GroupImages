@@ -12,7 +12,6 @@ namespace GILibrary
     {
         public static IList<Image2PdfModel> SortGI(this IList<Image2PdfModel> obj)
         {
-            List<string> filenamelist = new List<string>();
             string[] arr = new string[obj.Count()];
             var model = new List<Image2PdfModel>();
 
@@ -30,6 +29,26 @@ namespace GILibrary
                 var _fullpath = path + newList;
                 var temp = obj.Where(s => s._imagesPaths == _fullpath).ToList();
                 model.Add(new Image2PdfModel { _FolderPaths = temp[0]._FolderPaths, _imagesPaths = temp[0]._imagesPaths });
+            }
+
+            return model;
+        }
+        public static List<GISModel> SortGI(this List<GISModel> obj)
+        {
+            string[] arr = new string[obj.Count()];
+            var model = new List<GISModel>();
+
+            for (int i = 0; i < arr.Length; i++)
+            {
+                arr[i] = obj[i].fullName;
+            }
+
+            var list = NaturalSort(arr);
+
+            foreach (var newList in list)
+            {
+                var temp = obj.Where(s => s.fullName == newList).ToList();
+                model.Add(new GISModel { fullName = temp[0].fullName, lootFoldername = temp[0].lootFoldername,subFoldername=temp[0].subFoldername });
             }
 
             return model;

@@ -41,7 +41,7 @@ namespace WFA_GroupImages
                 chkSelect.Checked = state.state.isSelectSingle;
                 chkSort.Checked = state.state.isSorting;
                 chkMulti.Checked = state.state.isMulti;
-                if(chkMulti.Checked) chkSort.Checked = false;
+                //if(chkMulti.Checked) chkSort.Checked = false;
             }
 
             this.Focus();

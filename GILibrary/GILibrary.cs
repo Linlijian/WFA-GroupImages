@@ -77,7 +77,7 @@ namespace GILibrary
         }
 
         //method
-        public void GenerateSubFolderPdf(IList<Image2PdfModel> model)
+        public void GenerateSubFolderPdf(IList<Image2PdfModel> model,bool sort = false)
         {
             #region init
             string _path;
@@ -105,13 +105,25 @@ namespace GILibrary
                         goto NextPaths;
                     #endregion
 
+                    #region pdf sorting
+                    List<GISModel> imageAfterSort = new List<GISModel>();
+                    if (sort)
+                    {
+                        imageAfterSort = pdfPath._image.SortGI();
+                    }
+                    else
+                    {
+                        imageAfterSort = pdfPath._image;
+                    }
+                    #endregion
+
                     using (var stream = new FileStream(_path, FileMode.Create, FileAccess.Write, FileShare.None))
                     {
                         PdfWriter.GetInstance(doc, stream);
 
                         doc.Open();
 
-                        foreach (var imagePath in pdfPath._image)
+                        foreach (var imagePath in imageAfterSort)
                         {                            
                             using (var imageStream = new FileStream(GeneratePath(imagePath), FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                             {
